@@ -15,9 +15,9 @@ Production-grade Deep Reinforcement Learning Forex Trading System for EUR/USD.
 ## Hardware Optimized For.
 
 - **CPU:** Ryzen 7 7435HS (8C/16T)
-- **RAM:** 16GB DDR5
-- **GPU:** NVIDIA RTX 3050 Laptop (4GB VRAM, CUDA 11.8)
-- **OS:** Windows 11 + WSL2 Ubuntu 22.04
+- **RAM:** 16GB DDR5.
+- **GPU:** NVIDIA RTX 3050 Laptop (4GB VRAM, CUDA 11.8).
+- **OS:** Windows 11 + WSL2 Ubuntu 22.04.
 
 ## Quick Start
 
