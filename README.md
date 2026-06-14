@@ -1,4 +1,4 @@
-# AQRF — Autonomous Quant Research Firm
+# AQRF — Autonomous Quant Research Firm.
 
 Production-grade Deep Reinforcement Learning Forex Trading System for EUR/USD.
 
