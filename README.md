@@ -2,7 +2,7 @@
 
 Production-grade Deep Reinforcement Learning Forex Trading System for EUR/USD.
 
-## Architecture
+## Architecture..
 
 | Layer | Component | Purpose |
 |-------|-----------|---------|
