@@ -1,0 +1,19 @@
+# AQRF Risk Management Configuration
+
+# Kelly Criterion
+max_kelly_fraction: 0.02
+kelly_fraction_multiplier: 0.5
+
+# Stop Loss / Take Profit
+stop_vol_multiplier: 2.0
+min_rr_ratio: 1.5
+
+# Confluence Guard
+min_model_confidence: 0.60
+min_kelly_size: 0.005
+max_daily_trades: 15
+max_daily_drawdown: 0.02
+
+# Position limits
+max_position_risk: 0.02
+lot_size: 100000.0

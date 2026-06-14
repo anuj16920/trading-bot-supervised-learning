@@ -1,0 +1,108 @@
+version: '3.8'
+
+services:
+  timescaledb:
+    image: timescale/timescaledb:latest-pg15
+    container_name: aqrf_timescaledb
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER:-aqrf}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-aqrf_secure_2024}
+      POSTGRES_DB: ${DB_NAME:-forex_data}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - timescale_data:/var/lib/postgresql/data
+      - ./infrastructure/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    command: >
+      postgres
+      -c shared_buffers=2GB
+      -c effective_cache_size=4GB
+      -c maintenance_work_mem=512MB
+      -c work_mem=32MB
+      -c max_connections=50
+      -c wal_buffers=16MB
+      -c default_statistics_target=500
+      -c random_page_cost=1.1
+      -c effective_io_concurrency=200
+      -c checkpoint_completion_target=0.9
+      -c log_checkpoints=on
+      -c log_connections=on
+      -c log_disconnections=on
+      -c log_lock_waits=on
+      -c log_temp_files=0
+      -c log_autovacuum_min_duration=0
+      -c autovacuum_max_workers=4
+      -c autovacuum_naptime=20s
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-aqrf} -d ${DB_NAME:-forex_data}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - aqrf_network
+    deploy:
+      resources:
+        limits:
+          memory: 3G
+
+  redis:
+    image: redis:7-alpine
+    container_name: aqrf_redis
+    restart: unless-stopped
+    command: redis-server /usr/local/etc/redis/redis.conf
+    volumes:
+      - redis_data:/data
+      - ./infrastructure/redis/redis.conf:/usr/local/etc/redis/redis.conf:ro
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    sysctls:
+      - net.core.somaxconn=65535
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    networks:
+      - aqrf_network
+    deploy:
+      resources:
+        limits:
+          memory: 1.5G
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.9.0
+    container_name: aqrf_mlflow
+    restart: unless-stopped
+    environment:
+      MLFLOW_TRACKING_URI: http://0.0.0.0:5000
+      MLFLOW_ARTIFACT_ROOT: /mlflow/artifacts
+    volumes:
+      - mlflow_data:/mlflow
+    ports:
+      - "${MLFLOW_PORT:-5000}:5000"
+    command: >
+      mlflow server
+      --host 0.0.0.0
+      --port 5000
+      --backend-store-uri sqlite:///mlflow/mlflow.db
+      --default-artifact-root /mlflow/artifacts
+    networks:
+      - aqrf_network
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+volumes:
+  timescale_data:
+    driver: local
+  redis_data:
+    driver: local
+  mlflow_data:
+    driver: local
+
+networks:
+  aqrf_network:
+    driver: bridge

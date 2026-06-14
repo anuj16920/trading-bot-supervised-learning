@@ -1,0 +1,23 @@
+# AQRF Data Configuration
+symbol: EURUSD
+pip_size: 0.0001
+
+raw_tick_dir: ./data/EURUSD/tick
+m1_dir: ./data/EURUSD/M1
+h1_dir: ./data/EURUSD/H1
+
+chunk_size: 500000
+float_dtype: float32
+
+# Validation thresholds
+max_spread_pips: 10.0
+max_price_change_pips: 500.0
+max_gap_hours: 1.0
+
+# Chronological splits (strict — no overlap)
+train_start: "2015-01-01"
+train_end: "2021-12-31"
+val_start: "2022-01-01"
+val_end: "2022-12-31"
+test_start: "2023-01-01"
+test_end: "2024-12-31"

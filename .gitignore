@@ -1,0 +1,37 @@
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+
+# Python caches
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Local assistant/editor state
+.claude/
+.vscode/
+.idea/
+
+# Generated data, models, and experiment artifacts
+data/
+checkpoints/
+mlruns/
+tensorboard_logs/
+training_logs/
+eval_results/
+
+# Runtime logs and temporary arrays
+*.log
+*.tmp
+*.tmp.npy
+
+# OS files
+.DS_Store
+Thumbs.db

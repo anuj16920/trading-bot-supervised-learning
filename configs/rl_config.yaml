@@ -1,0 +1,55 @@
+# AQRF Reinforcement Learning Configuration
+
+# Environment
+episode_bars: 43200
+initial_capital: 10000.0
+
+# Observation space
+market_features: 45
+portfolio_features: 5
+obs_shape: [60, 50]
+
+# Action space
+n_actions: 6
+
+# PPO Hyperparameters
+policy_net_arch:
+  pi: [256, 256, 128]
+  vf: [256, 256, 128]
+
+learning_rate: 0.0003
+n_steps: 2048
+batch_size: 64
+n_epochs: 10
+gamma: 0.99
+gae_lambda: 0.95
+clip_range: 0.2
+ent_coef: 0.01
+vf_coef: 0.5
+max_grad_norm: 0.5
+
+# Vectorized environments
+n_envs: 4
+
+# Training schedule
+total_timesteps: 10000000
+eval_freq: 10000
+save_freq: 100000
+n_eval_episodes: 10
+
+# Reward shaping
+sharpe_scale: 1.0
+drawdown_penalty: -2.0
+drawdown_threshold: 0.02
+overtrade_penalty: -0.1
+overtrade_threshold: 10
+hold_penalty: -0.01
+hold_threshold: 100
+
+# Termination
+max_drawdown: 0.05
+min_account: 8000.0
+
+# Execution costs
+slippage_pips: 0.5
+spread_pips: 0.0
