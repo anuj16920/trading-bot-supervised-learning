@@ -12,7 +12,7 @@ Production-grade Deep Reinforcement Learning Forex Trading System for EUR/USD.
 | 4 | RL Agent | PPO-trained autonomous trading agent |
 | 5 | Risk Engine | Kelly sizing, stops, confluence guard |
 
-## Hardware Optimized For
+## Hardware Optimized For.
 
 - **CPU:** Ryzen 7 7435HS (8C/16T)
 - **RAM:** 16GB DDR5
